@@ -1,0 +1,7 @@
+postgres:
+  host: localhost
+  port: 5123
+  user: postgres
+  password: postgres
+  database: delivery
+  poolSize: 1000

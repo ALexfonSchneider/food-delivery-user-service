@@ -1,0 +1,3 @@
+[submodule "food-delivery-proto"]
+	path = food-delivery-proto
+	url = https://github.com/ALexfonSchneider/food-delivery-proto.git
