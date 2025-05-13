@@ -1,0 +1,50 @@
+name: food-delivery
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: pl-postgres
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5123:5432"
+    environment:
+      POSTGRES_DB: delivery
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 30s
+      timeout: 60s
+      retries: 5
+      start_period: 80s
+    networks:
+      pl_net:
+        aliases:
+          - postgres
+
+  service:
+    build:
+      dockerfile: docker/Dockerfile
+      context: ../
+      target: app
+    restart: on-failure
+    ports:
+      - "50052:50052"
+    environment:
+      APP_ENV: docker
+    networks:
+      pl_net:
+      otel_net:
+    depends_on:
+      - postgres
+
+networks:
+  pl_net:
+  otel_net:
+    external: true
+    name: food-delivery_otel_net
+
+volumes:
+  postgres_data:

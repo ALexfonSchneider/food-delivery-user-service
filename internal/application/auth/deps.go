@@ -1,8 +1,9 @@
-package user
+package auth
 
 import (
 	"context"
 	"github.com/ALexfonSchneider/food-delivery-user-service/internal/domain"
+	"log/slog"
 )
 
 type Repository interface {
@@ -14,10 +15,23 @@ type Repository interface {
 	Exec(ctx context.Context, f func(ctx context.Context) error) error
 }
 
-type Service struct {
-	repo Repository
+type PasswordHasher interface {
+	Hash(password string) (string, error)
+	Compare(hash, password string) error
 }
 
-func NewService(repo Repository) *Service {
-	return &Service{repo}
+type JwtProvider interface {
+	CreateToken(user *UserCredentials, Use TokenType) (string, error)
+	ValidateToken(tokenString string) (*Claims, error)
+}
+
+type Service struct {
+	log    *slog.Logger
+	repo   Repository
+	hasher PasswordHasher
+	jwt    JwtProvider
+}
+
+func NewService(log *slog.Logger, repo Repository, hasher PasswordHasher, jwt JwtProvider) *Service {
+	return &Service{log, repo, hasher, jwt}
 }

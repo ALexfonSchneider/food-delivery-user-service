@@ -13,7 +13,7 @@ func MustPGXPool(ctx context.Context, cfg *config.Config, logger *slog.Logger, l
 		panic(err)
 	}
 
-	conf.MaxConns = int32(cfg.Postgres.PoolSize)
+	conf.MaxConns = int32(cfg.Postgres.GetPoolSize())
 
 	pool, err := pgxpool.NewWithConfig(ctx, conf)
 	if err != nil {

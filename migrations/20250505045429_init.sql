@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users.user (
     first_name TEXT NOT NULL,
     last_name TEXT,
     email TEXT UNIQUE NOT NULL,
-    phone TEXT UNIQUE,
+    phone TEXT UNIQUE NOT NULL,
     hash_password TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
