@@ -4,7 +4,7 @@ postgres:
   user: postgres
   password: postgres
   database: delivery
-  poolSize: 1000
+  poolSize: 20
 auth:
   secretKey: "fchg678q314fgia7uywe7rfg798i4q"
 otel:

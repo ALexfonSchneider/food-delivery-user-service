@@ -78,6 +78,6 @@ func NewApp(ctx context.Context, cfg *config.Config, ready chan<- struct{}) {
 	select {
 	case <-ctx.Done():
 		log.Info("Shutting down gRPC server")
-		grpcServer.Stop()
+		grpcServer.GracefulStop()
 	}
 }
