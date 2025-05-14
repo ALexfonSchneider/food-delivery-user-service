@@ -5,6 +5,8 @@ import (
 	"github.com/ALexfonSchneider/food-delivery-user-service/internal/domain"
 )
 
+//go:generate mockgen -source=deps.go -destination deps_mock_test.go -package "${GOPACKAGE}_test"
+
 type Repository interface {
 	GetUserByEmail(ctx context.Context, email string) (*domain.User, error)
 	GetUserById(ctx context.Context, id string) (*domain.User, error)
