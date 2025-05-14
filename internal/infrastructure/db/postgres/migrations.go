@@ -7,7 +7,7 @@ import (
 )
 
 func (r *Repository) Migrate(cfg *config.Config) error {
-	db, err := sql.Open("postgres", cfg.Postgres.ConnectionString())
+	db, err := sql.Open("postgres", cfg.Postgres.ConnectionStringPQ())
 
 	if err != nil {
 		return err

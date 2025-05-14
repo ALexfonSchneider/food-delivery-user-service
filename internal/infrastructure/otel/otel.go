@@ -15,13 +15,12 @@ import (
 	"go.opentelemetry.io/otel/sdk/resource"
 	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 	semconv "go.opentelemetry.io/otel/semconv/v1.9.0"
-	"go.opentelemetry.io/otel/trace"
 	"google.golang.org/grpc"
 	"log/slog"
 	"os"
 )
 
-func InitTracer(conf *config.Config) (trace.TracerProvider, func()) {
+func InitTracerProvider(conf *config.Config) (*sdktrace.TracerProvider, func()) {
 	ctx := context.Background()
 
 	// Подключение к OTLP endpoint (например, Otel Collector или напрямую в Tempo/Jaeger)
@@ -78,7 +77,6 @@ func InitTracer(conf *config.Config) (trace.TracerProvider, func()) {
 		if err := tp.Shutdown(ctx); err != nil {
 			fmt.Printf("error shutting down tracer provider: %v", err)
 		}
-
 		if err := lp.Shutdown(ctx); err != nil {
 			panic(fmt.Sprintf("failed to shutdown logger provider: %v", err))
 		}

@@ -49,6 +49,15 @@ func (a *AuthConfig) GetRefreshTokenTTL() time.Duration {
 
 func (p *PostgresConfig) ConnectionString() string {
 	return fmt.Sprintf(
+		"postgres://%s:%s@%s/%s?sslmode=disable&pool_max_conns=%d&pool_max_conn_lifetime=1h30m",
+		p.GetUser(), url.PathEscape(p.GetPassword()),
+		net.JoinHostPort(p.GetHost(), p.GetPort()),
+		p.GetDatabase(), p.GetPoolSize(),
+	)
+}
+
+func (p *PostgresConfig) ConnectionStringPQ() string {
+	return fmt.Sprintf(
 		"postgres://%s:%s@%s/%s?sslmode=disable",
 		p.GetUser(), url.PathEscape(p.GetPassword()),
 		net.JoinHostPort(p.GetHost(), p.GetPort()),

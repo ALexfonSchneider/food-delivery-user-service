@@ -3,6 +3,7 @@ package pgxpool
 import (
 	"context"
 	"github.com/ALexfonSchneider/food-delivery-user-service/internal/config"
+	"github.com/exaring/otelpgx"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"log/slog"
 )
@@ -13,7 +14,7 @@ func MustPGXPool(ctx context.Context, cfg *config.Config, logger *slog.Logger, l
 		panic(err)
 	}
 
-	conf.MaxConns = int32(cfg.Postgres.GetPoolSize())
+	conf.ConnConfig.Tracer = otelpgx.NewTracer()
 
 	pool, err := pgxpool.NewWithConfig(ctx, conf)
 	if err != nil {

@@ -4,10 +4,11 @@ postgres:
   user: postgres
   password: postgres
   database: delivery
-  poolSize: 1000
+  poolSize: 20
 auth:
   secretKey: "fchg678q314fgia7uywe7rfg798i4q"
 otel:
-  grpc_endpoint: otel:4317
+  grpc_endpoint: localhost:4317
 app:
+  grpc_host: localhost
   grpc_port: 50052
