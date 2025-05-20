@@ -6,6 +6,8 @@ import (
 	"github.com/pressly/goose/v3"
 )
 
+var postgresDialect = string(goose.DialectPostgres)
+
 func (r *Repository) Migrate(cfg *config.Config) error {
 	db, err := sql.Open("postgres", cfg.Postgres.ConnectionStringPQ())
 
@@ -13,7 +15,7 @@ func (r *Repository) Migrate(cfg *config.Config) error {
 		return err
 	}
 
-	if err := goose.SetDialect("postgres"); err != nil {
+	if err := goose.SetDialect(postgresDialect); err != nil {
 		return err
 	}
 
